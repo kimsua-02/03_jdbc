@@ -15,7 +15,6 @@ public class Application05 {
     public static void main(String[] args) {
 
         // 여러 DTO 를 하나의 List 로 묶어서 처리.
-
         Connection con = getConnection();
         Statement stmt = null;
         ResultSet rset = null;
