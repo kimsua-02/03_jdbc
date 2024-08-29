@@ -2,9 +2,9 @@ package com.ohgiraffers.section02.controller.dao;
 
 import com.ohgiraffers.section02.controller.dto.MenuDTO;
 
-import java.awt.*;
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.sql.Connection;
 import java.sql.*;
 import java.util.*;
 import java.util.List;
@@ -98,5 +98,40 @@ public class MenuDAO {
             close(pstmt);
         }
         return result;
+    }
+
+    public int updateMenu(Connection con, MenuDTO menuDTO, String menuName) {
+
+        Scanner scr = new Scanner(System.in);
+
+        con = getConnection();
+        PreparedStatement pstmt = null;
+
+        int result3 = 0;
+
+        try {
+
+            String query = prop.getProperty("updateMenu");
+
+            pstmt = con.prepareStatement(query);
+            pstmt.setString(4,menuName);
+            pstmt.setString(1,menuDTO.getName());
+            pstmt.setInt(2,menuDTO.getPrice());
+            pstmt.setInt(3,menuDTO.getCategoryCode());
+
+            result3 = pstmt.executeUpdate();
+
+            if (result3 == 1){
+                System.out.println("메뉴 수정이 성고곡ㄱ적으로 완료 되었습니다.");
+            }else{
+                System.out.println("뙝 !!!! ");
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }finally {
+            close(con);
+            close(pstmt);
+        }
+        return result3;
     }
 }
